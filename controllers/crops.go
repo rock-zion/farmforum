@@ -104,5 +104,21 @@ func EditCrop(farmforumDatabase *mongo.Database) http.Handler {
 
 // insert many a crop entry
 func InsertManyCrops(farmforumDatabase *mongo.Database) http.Handler {
-	return http.HandlerFunc((func(w http.ResponseWriter, r *http.Request) {}))
+	var cropDocument = []interface{}{models.Crop{}}
+	cropCollection := farmforumDatabase.Collection("crop")
+	return http.HandlerFunc((func(w http.ResponseWriter, r *http.Request) {
+		println("Adding Many...")
+		err := json.NewDecoder(r.Body).Decode(&cropDocument)
+		if err != nil {
+			panic(fmt.Errorf("this is the error 1 %v", err))
+		}
+
+		insertResult, err := cropCollection.InsertMany(context.TODO(), cropDocument)
+		if err != nil {
+			panic(fmt.Errorf("this is the error 2 %v", err))
+		}
+		w.WriteHeader(http.StatusCreated)
+		log.Println(insertResult)
+
+	}))
 }
