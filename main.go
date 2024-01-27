@@ -43,4 +43,6 @@ func main() {
 		Addr:    os.Getenv("SERVER_ADDR"),
 		Handler: router,
 	}
+
+	server.ListenAndServe()
 }
