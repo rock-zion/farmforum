@@ -8,6 +8,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 
+	"github.com/gorilla/mux"
 	"github.com/joho/godotenv"
 )
 
@@ -34,4 +35,7 @@ func main() {
 	}()
 
 	famrmforumDatabase := client.Database(os.Getenv("FARM_FORUM_DB_NAME"))
+
+	router := mux.NewRouter()
+
 }
