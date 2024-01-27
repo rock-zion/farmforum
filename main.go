@@ -32,4 +32,6 @@ func main() {
 			panic(err)
 		}
 	}()
+
+	famrmforumDatabase := client.Database(os.Getenv("FARM_FORUM_DB_NAME"))
 }
