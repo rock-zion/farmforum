@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"log"
+	"net/http"
 	"os"
 
 	"go.mongodb.org/mongo-driver/mongo"
@@ -38,4 +39,8 @@ func main() {
 
 	router := mux.NewRouter()
 
+	server := &http.Server{
+		Addr:    os.Getenv("SERVER_ADDR"),
+		Handler: router,
+	}
 }
