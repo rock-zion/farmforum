@@ -20,7 +20,6 @@ type (
 		Question      string             `bson:"question"`
 		CropId        primitive.ObjectID `bson:"cropId,omitempty"`
 		OlderVersions []string           `bson:"olderVersions,omitempty"`
-		IsUpdated     bool               `bson:"isUpdated"`
 		CreatedAt     time.Time          `bson:"createdAt"`
 		UpdatedAt     time.Time          `bson:"updatedAt"`
 	}
