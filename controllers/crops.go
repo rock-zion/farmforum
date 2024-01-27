@@ -1,8 +1,12 @@
 package controllers
 
 import (
+	"context"
+	"encoding/json"
+	"log"
 	"net/http"
 
+	"github.com/farmforum/models"
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
@@ -15,7 +19,21 @@ func FetchAllCrops(famrmforumDatabase *mongo.Database) http.Handler {
 
 // add a crop entry
 func AddCrop(famrmforumDatabase *mongo.Database) http.Handler {
-	return http.HandlerFunc((func(w http.ResponseWriter, r *http.Request) {}))
+	cropDocument := models.Crop{}
+	cropCollection := famrmforumDatabase.Collection("crop")
+	return http.HandlerFunc((func(w http.ResponseWriter, r *http.Request) {
+		err := json.NewDecoder(r.Body).Decode(&cropDocument)
+		if err != nil {
+			panic(err)
+		}
+
+		insertResult, err := cropCollection.InsertOne(context.TODO(), cropDocument)
+		if err != nil {
+			panic(err)
+		}
+		w.WriteHeader(http.StatusCreated)
+		log.Println(insertResult)
+	}))
 }
 
 // delete a crop entry
