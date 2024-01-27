@@ -3,10 +3,13 @@ package controllers
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 
 	"github.com/farmforum/models"
+	"github.com/gorilla/mux"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"gopkg.in/mgo.v2/bson"
 )
@@ -52,7 +55,21 @@ func AddCrop(farmforumDatabase *mongo.Database) http.Handler {
 
 // delete a crop entry
 func DeleteCrop(farmforumDatabase *mongo.Database) http.Handler {
-	return http.HandlerFunc((func(w http.ResponseWriter, r *http.Request) {}))
+	cropCollection := farmforumDatabase.Collection("crop")
+	return http.HandlerFunc((func(w http.ResponseWriter, r *http.Request) {
+		vars := mux.Vars(r)
+		id, err := primitive.ObjectIDFromHex(vars["id"])
+		if err != nil {
+			panic(err)
+		}
+		result, err := cropCollection.DeleteOne(context.TODO(), bson.M{"_id": id})
+		if err != nil {
+			panic(fmt.Errorf("this is the error 1 %v", err))
+		}
+
+		w.WriteHeader(http.StatusNoContent)
+		log.Println(result)
+	}))
 }
 
 // edit a crop entry
