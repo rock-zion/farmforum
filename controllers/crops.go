@@ -74,7 +74,32 @@ func DeleteCrop(farmforumDatabase *mongo.Database) http.Handler {
 
 // edit a crop entry
 func EditCrop(farmforumDatabase *mongo.Database) http.Handler {
-	return http.HandlerFunc((func(w http.ResponseWriter, r *http.Request) {}))
+	cropCollection := farmforumDatabase.Collection("crop")
+	return http.HandlerFunc((func(w http.ResponseWriter, r *http.Request) {
+		fmt.Println("Updating...")
+		vars := mux.Vars(r)
+		var cropToUpdate models.Crop
+		err := json.NewDecoder(r.Body).Decode(&cropToUpdate)
+		if err != nil {
+			panic(err)
+		}
+
+		update := bson.M{
+			"$set": bson.M{
+				"gestationInDays": cropToUpdate.GestationInDays,
+				"description":     cropToUpdate.Description},
+		}
+
+		id, err := primitive.ObjectIDFromHex(vars["id"])
+		if err != nil {
+			panic(err)
+		}
+		singleResult, err := cropCollection.UpdateOne(context.TODO(), bson.M{"_id": id}, update)
+		if err != nil {
+			panic(err)
+		}
+		fmt.Println(singleResult)
+	}))
 }
 
 // insert many a crop entry
