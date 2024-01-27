@@ -9,6 +9,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 
+	"github.com/farmforum/controllers"
 	"github.com/gorilla/mux"
 	"github.com/joho/godotenv"
 )
@@ -38,6 +39,11 @@ func main() {
 	famrmforumDatabase := client.Database(os.Getenv("FARM_FORUM_DB_NAME"))
 
 	router := mux.NewRouter()
+	router.Handle("/crops", controllers.AddCrop(famrmforumDatabase)).Methods("POST")
+	router.Handle("/crops", controllers.FetchAllCrops(famrmforumDatabase)).Methods("GET")
+	router.Handle("/crops/many", controllers.InsertManyCrops(famrmforumDatabase)).Methods("POST")
+	router.Handle("/crops/{id}", controllers.DeleteCrop(famrmforumDatabase)).Methods("DELETE")
+	router.Handle("/crops/{id}", controllers.EditCrop(famrmforumDatabase)).Methods("PUT")
 
 	server := &http.Server{
 		Addr:    os.Getenv("SERVER_ADDR"),
