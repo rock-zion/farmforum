@@ -45,6 +45,11 @@ func main() {
 	router.Handle("/crops/{id}", controllers.DeleteCrop(famrmforumDatabase)).Methods("DELETE")
 	router.Handle("/crops/{id}", controllers.EditCrop(famrmforumDatabase)).Methods("PUT")
 
+	//
+	router.Handle("/question/{id}", controllers.AddQuestion(famrmforumDatabase)).Methods("POST")
+    router.Handle("/questions/{id}", controllers.AddQuestion(famrmforumDatabase)).Methods("GET")
+    router.Handle("/questions/{id}", controllers.AddQuestion(famrmforumDatabase)).Methods("PATCH")
+
 	server := &http.Server{
 		Addr:    os.Getenv("SERVER_ADDR"),
 		Handler: router,
