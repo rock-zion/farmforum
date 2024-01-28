@@ -16,6 +16,34 @@ import (
 
 // this file houses all crud logic for questions
 
+// edit a crop entry
+func FetchCropById(farmforumDatabase *mongo.Database) http.Handler {
+	cropCollection := farmforumDatabase.Collection("crop")
+	return http.HandlerFunc((func(w http.ResponseWriter, r *http.Request) {
+		vars := mux.Vars(r)
+		id, err := primitive.ObjectIDFromHex(vars["id"])
+		if err != nil {
+			panic(err)
+		}
+
+		filter := bson.M{"_id": id}
+		cursor, err := cropCollection.Find(context.TODO(), filter)
+		if err != nil {
+			panic(err)
+		}
+
+		result := []models.Crop{}
+		err = cursor.All(context.TODO(), &result)
+		if err != nil {
+			panic(err)
+		}
+
+		w.Header().Set("Content-type", "application/vnd.api+json")
+		json.NewEncoder(w).Encode(result)
+
+	}))
+}
+
 // fetch all crops
 func FetchAllCrops(farmforumDatabase *mongo.Database) http.Handler {
 	cropCollection := farmforumDatabase.Collection("crop")
