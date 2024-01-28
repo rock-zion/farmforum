@@ -75,6 +75,29 @@ func UpdateQuestion(farmforumDatabase *mongo.Database) http.Handler {
 	}))
 }
 
-func FetchQuestionById() http.Handler {
-	return http.HandlerFunc((func(w http.ResponseWriter, r *http.Request) {}))
+func FetchQuestionByCropId(farmforumDatabase *mongo.Database) http.Handler {
+	return http.HandlerFunc((func(w http.ResponseWriter, r *http.Request) {
+		questionCollection := farmforumDatabase.Collection("questions")
+
+		vars := mux.Vars(r)
+		id, err := primitive.ObjectIDFromHex(vars["id"])
+		if err != nil {
+			panic(err)
+		}
+		filter := bson.M{"cropId": id}
+
+		cursor, err := questionCollection.Find(context.TODO(), filter)
+		if err != nil {
+			panic(err)
+		}
+
+		var questions []models.Question
+		if err = cursor.All(context.TODO(), &questions); err != nil {
+			panic(err)
+		}
+
+		w.Header().Set("Content-Type", "application/vnd.api+json")
+		json.NewEncoder(w).Encode(questions)
+
+	}))
 }

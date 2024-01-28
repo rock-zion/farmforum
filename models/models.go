@@ -9,25 +9,25 @@ import (
 type (
 	Crop struct {
 		Id              primitive.ObjectID `bson:"_id,omitempty"`
-		Name            string             `bson:"name,omitempty"`
-		GestationInDays int16              `bson:"gestationInDays,omitempty"`
-		BotanicalName   string             `bson:"botanicalName,omitempty"`
-		Description     string             `bson:"description,omitempty"`
+		Name            string             `json:"name,omitempty"`
+		GestationInDays int16              `json:"gestationInDays,omitempty"`
+		BotanicalName   string             `json:"botanicalName,omitempty"`
+		Description     string             `json:"description,omitempty"`
 	}
 
 	Question struct {
 		Id            primitive.ObjectID `bson:"_id,omitempty"`
-		Question      string             `bson:"question"`
+		Question      string             `json:"question"`
 		CropId        primitive.ObjectID `bson:"cropId,omitempty"`
-		OlderVersions []string           `bson:"olderVersions,omitempty"`
-		CreatedAt     time.Time          `bson:"createdAt"`
-		UpdatedAt     time.Time          `bson:"updatedAt"`
+		OlderVersions []string           `json:"olderVersions,omitempty"`
+		CreatedAt     time.Time          `json:"createdAt"`
+		UpdatedAt     time.Time          `json:"updatedAt"`
 	}
 
 	Answer struct {
 		Id         primitive.ObjectID `bson:"_id,omitempty"`
-		QuestionId primitive.ObjectID `bson:"question"`
-		Reply      string             `bson:"reply"`
-		CreatedAt  time.Time          `bson:"createdAt"`
+		QuestionId primitive.ObjectID `json:"question"`
+		Reply      string             `json:"reply"`
+		CreatedAt  time.Time          `json:"createdAt"`
 	}
 )
