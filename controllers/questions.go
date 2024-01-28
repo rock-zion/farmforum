@@ -10,6 +10,7 @@ import (
 	"github.com/gorilla/mux"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
+	"gopkg.in/mgo.v2/bson"
 )
 
 // this file houses all crud logic for questions
@@ -40,7 +41,38 @@ func AddQuestion(farmforumDatabase *mongo.Database) http.Handler {
 }
 
 func UpdateQuestion(farmforumDatabase *mongo.Database) http.Handler {
-	return http.HandlerFunc((func(w http.ResponseWriter, r *http.Request) {}))
+	return http.HandlerFunc((func(w http.ResponseWriter, r *http.Request) {
+		questionDocument := models.Question{}
+		questionCollection := farmforumDatabase.Collection("questions")
+		vars := mux.Vars(r)
+
+		err := json.NewDecoder(r.Body).Decode(&questionDocument)
+		if err != nil {
+			panic(err)
+		}
+		id, err := primitive.ObjectIDFromHex(vars["id"])
+		if err != nil {
+			panic(err)
+		}
+
+		// Find an element vith the ID from request
+		var result models.Question
+		err = questionCollection.FindOne(context.TODO(), bson.M{"_id": id}).Decode(&result)
+		if err != nil {
+			panic(err)
+		}
+
+		update := bson.M{
+			"$set":  bson.M{"question": questionDocument.Question},
+			"$push": bson.M{"olderVersions": result.Question},
+		}
+
+		_, err = questionCollection.UpdateOne(context.TODO(), bson.M{"_id": id}, update)
+		if err != nil {
+			panic(err)
+		}
+
+	}))
 }
 
 func FetchQuestionById() http.Handler {
