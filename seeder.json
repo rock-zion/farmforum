@@ -1,0 +1,58 @@
+[
+    {
+        "Id": "65b2cb6a2eba7cec2f0ab468",
+        "name": "Carrot",
+        "gestationInDays": 80,
+        "botanicalName": "Daucus carota",
+        "description": "The carrot (Daucus carota subsp. sativus) is a root vegetable, typically orange in color, though heirloom variants including purple, black, red, white, and yellow cultivars exist,[2][3][4] all of which are domesticated forms of the wild carrot, Daucus carota, native to Europe and Southwestern Asia. The plant probably originated in Persia and was originally cultivated for its leaves and seeds. The most commonly eaten part of the plant is the taproot, although the stems and leaves are also eaten. The domestic carrot has been selectively bred for its enlarged, more palatable, less woody-textured taproot."
+    },
+    {
+        "Id": "65b2cb6a2eba7cec2f0ab469",
+        "name": "Potato",
+        "gestationInDays": 90,
+        "botanicalName": "Solanum tuberosum",
+        "description": "The potato /pəˈteɪtoʊ/ is a starchy root vegetable native to the Americas that is consumed as a staple food in many parts of the world.[2] Potatoes are tubers of the plant Solanum tuberosum, a perennial in the nightshade family Solanaceae.[3]. Wild potato species can be found from the southern United States to southern Chile.[4] The potato was originally believed to have been domesticated by Native Americans independently in multiple locations,[5] but later genetic studies traced a single origin, in the area of present-day southern Peru and extreme northwestern Bolivia. Potatoes were domesticated there about 7,000–10,000 years ago from a species in the S. brevicaule complex.[6][7][8] Many varieties of the potato are cultivated in the Andes region of South America, where the species is indigenous."
+    },
+    {
+        "Id": "65b2cb6a2eba7cec2f0ab46a",
+        "name": "Aubergine",
+        "gestationInDays": 2900,
+        "botanicalName": "Solanum melongena",
+        "description": "The eggplant is a delicate, tropical perennial plant often cultivated as a tender or half-hardy annual in temperate climates. The stem is often spiny. The flowers are white to purple in color, with a five-lobed corolla and yellow stamens. Some common cultivars have fruit that is egg-shaped, glossy, and purple with white flesh and a spongy, 'meaty' texture. Some other cultivars are white and longer in shape. The cut surface of the flesh rapidly turns brown when the fruit is cut open (oxidation)."
+    },
+    {
+        "Id": "65b36345e7c8ed60aa9253cb",
+        "name": "Yam",
+        "gestationInDays": 270,
+        "botanicalName": "Dioscorea",
+        "description": "A monocot related to lilies and grasses, yams are vigorous herbaceous, perennially growing vines from a tuber.[1] Some 870 species of yams are known,[1] a few of which are widely grown for their edible tuber but others of which are toxic (such as D. communis).    "
+    },
+    {
+        "Id": "65b36345e7c8ed60aa9253cc",
+        "name": "Lettuce",
+        "gestationInDays": 70,
+        "botanicalName": "Lactuca sativa",
+        "description": "Lettuce's native range spreads from the Mediterranean to Siberia, although it has been transported to almost all areas of the world. Plants generally have a height and spread of 15 to 30 cm (6 to 12 in).[14] The leaves are colorful, mainly in the green and red color spectrums, with some variegated varieties.[15] There are also a few varieties with yellow, gold or blue-teal leaves.[16]"
+    },
+    {
+        "Id": "65b36345e7c8ed60aa9253cd",
+        "name": "Bok choy",
+        "gestationInDays": 30,
+        "botanicalName": "Brassica rapa subsp. chinensis",
+        "description": "Bok choy (American English, Canadian English, and Australian English), pak choi (British English) or pok choi (Brassica rapa subsp. chinensis) is a type of Chinese cabbage, used as food. Chinensis varieties do not form heads and have green leaf blades with lighter bulbous bottoms instead, forming a cluster reminiscent of mustard greens. It has a flavor between spinach and water chestnuts but is slightly sweeter, with a mildly peppery undertone. The green leaves have a stronger flavor than the white bulb.["
+    },
+    {
+        "Id": "65b3b8a6610e266863bdbb97",
+        "name": "Bell Pepper",
+        "gestationInDays": 184,
+        "botanicalName": "Capsicum",
+        "description": "The bell pepper (also known as sweet pepper, pepper, capsicum /ˈkæpsɪkəm/[1] or in some places, mangoes[2]) is the fruit of plants in the Grossum Group of the species Capsicum annuum.[3][4] Cultivars of the plant produce fruits in different colors, including red, yellow, orange, green, white, chocolate, candy cane striped, and purple. Bell peppers are sometimes grouped with less pungent chili varieties as 'sweet peppers'. While they are botanically fruits—classified as berries—they are commonly used as a vegetable ingredient or side dish. Other varieties of the genus Capsicum are categorized as chili peppers when they are cultivated for their pungency, including some varieties of Capsicum annuum"
+    },
+    {
+        "Id": "65b648d34c2a20bc1e7abc37",
+        "name": "Plantain",
+        "gestationInDays": 365,
+        "botanicalName": "Musa × paradisiaca",
+        "description": "Plantains contain more starch and less sugar than dessert bananas, so they are usually cooked or otherwise processed before being eaten. They are typically boiled or fried when eaten green, and when processed, they can be made into flour and turned into baked products such as cakes, bread and pancakes. Green plantains can also be boiled and pureed and then used as thickeners for soups.[9] The pulp of green plantain is typically hard, with the peel often so stiff that it must be cut with a knife to be removed.[10]"
+    }
+]
