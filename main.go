@@ -53,6 +53,7 @@ func main() {
 
 	// routers to handle user actions
 	router.Handle("/user", controllers.HandleAddUser(famrmforumDatabase)).Methods(("POST"))
+	router.Handle("/user/login", controllers.HandleLogUserIn(famrmforumDatabase)).Methods(("POST"))
 
 	server := &http.Server{
 		Addr:    os.Getenv("SERVER_ADDR"),
