@@ -51,6 +51,9 @@ func main() {
 	router.Handle("/question/{id}", controllers.AddQuestion(famrmforumDatabase)).Methods("POST")
 	router.Handle("/questions/{id}", controllers.UpdateQuestion(famrmforumDatabase)).Methods("GET")
 
+	// routers to handle user actions
+	router.Handle("/user", controllers.HandleAddUser(famrmforumDatabase)).Methods(("POST"))
+
 	server := &http.Server{
 		Addr:    os.Getenv("SERVER_ADDR"),
 		Handler: router,
