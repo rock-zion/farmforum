@@ -4,12 +4,14 @@ import (
 	"context"
 	"encoding/json"
 	"net/http"
+	"strings"
 	"time"
 
 	// "github.com/farmforum/controllers"
 	"github.com/farmforum/models"
 	"go.mongodb.org/mongo-driver/mongo"
 	"golang.org/x/crypto/bcrypt"
+	"gopkg.in/mgo.v2/bson"
 )
 
 func HashPassword(password string) (string, error) {
@@ -32,9 +34,16 @@ func HandleAddUser(db *mongo.Database) http.Handler {
 			panic(err)
 		}
 
+		singleResult := userCollection.FindOne(context.TODO(), bson.M{"email": strings.ToLower(userDocument.Email)})
+		if singleResult != nil {
+			w.WriteHeader(http.StatusConflict)
+			return
+		}
+
 		currentTime := time.Now()
 		userDocument.CreatedAt = currentTime
 		userDocument.UpdatedAt = currentTime
+		userDocument.Email = strings.ToLower(userDocument.Email)
 		hashedPassword, err := HashPassword(userDocument.Password)
 		if err != nil {
 			panic(err)
@@ -50,4 +59,3 @@ func HandleAddUser(db *mongo.Database) http.Handler {
 
 	}))
 }
-
