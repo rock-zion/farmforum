@@ -25,9 +25,10 @@ func CheckPasswordHash(password, hash string) bool {
 }
 
 func HandleAddUser(db *mongo.Database) http.Handler {
-	userCollection := db.Collection("users")
-	var userDocument models.User
+
 	return http.HandlerFunc((func(w http.ResponseWriter, r *http.Request) {
+		userCollection := db.Collection("users")
+		var userDocument models.User
 
 		err := json.NewDecoder(r.Body).Decode(&userDocument)
 		if err != nil {
@@ -62,6 +63,26 @@ func HandleAddUser(db *mongo.Database) http.Handler {
 
 func HandleLogUserIn(db *mongo.Database) http.Handler {
 	return http.HandlerFunc((func(w http.ResponseWriter, r *http.Request) {
+		userCollection := db.Collection("users")
+		usersDocument := models.User{}
+		usersDocumentToCheck := models.User{}
+		err := json.NewDecoder(r.Body).Decode(&usersDocument)
+		if err != nil {
+			panic(err)
+		}
 
+		err = userCollection.FindOne(context.TODO(), bson.M{"email": strings.ToLower(usersDocument.Email)}).Decode(&usersDocumentToCheck)
+		if err != nil {
+			w.WriteHeader(http.StatusBadRequest)
+			return
+		} else {
+			if CheckPasswordHash(usersDocument.Password, usersDocumentToCheck.Password) {
+				w.WriteHeader(http.StatusAccepted)
+				return
+			} else {
+				w.WriteHeader(http.StatusUnauthorized)
+				return
+			}
+		}
 	}))
 }
