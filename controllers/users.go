@@ -10,9 +10,9 @@ import (
 	"time"
 
 	// "github.com/farmforum/controllers"
+	db "github.com/farmforum/config"
 	"github.com/farmforum/models"
 	"github.com/golang-jwt/jwt"
-	"go.mongodb.org/mongo-driver/mongo"
 	"golang.org/x/crypto/bcrypt"
 	"gopkg.in/mgo.v2/bson"
 )
@@ -27,10 +27,10 @@ func CheckPasswordHash(password, hash string) bool {
 	return err == nil
 }
 
-func HandleAddUser(db *mongo.Database) http.Handler {
+func HandleAddUser() http.Handler {
 
 	return http.HandlerFunc((func(w http.ResponseWriter, r *http.Request) {
-		userCollection := db.Collection("users")
+		userCollection := db.DB().Collection("users")
 		var userDocument models.User
 
 		err := json.NewDecoder(r.Body).Decode(&userDocument)
@@ -64,9 +64,9 @@ func HandleAddUser(db *mongo.Database) http.Handler {
 	}))
 }
 
-func HandleLogUserIn(db *mongo.Database) http.Handler {
+func HandleLogUserIn() http.Handler {
 	return http.HandlerFunc((func(w http.ResponseWriter, r *http.Request) {
-		userCollection := db.Collection("users")
+		userCollection := db.DB().Collection("users")
 		usersDocument := models.User{}
 		filterResponseDoc := models.User{}
 
@@ -104,6 +104,7 @@ func HandleLogUserIn(db *mongo.Database) http.Handler {
 					"data": map[string]interface{}{},
 				}
 
+				// I have a feeling this can we cleaned up with a struct.
 				res["token"] = signedString
 				res["data"].(map[string]interface{})["name"] = filterResponseDoc.Name
 				res["data"].(map[string]interface{})["id"] = filterResponseDoc.Id

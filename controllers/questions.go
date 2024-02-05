@@ -6,18 +6,18 @@ import (
 	"net/http"
 	"time"
 
+	db "github.com/farmforum/config"
 	"github.com/farmforum/models"
 	"github.com/gorilla/mux"
 	"go.mongodb.org/mongo-driver/bson/primitive"
-	"go.mongodb.org/mongo-driver/mongo"
 	"gopkg.in/mgo.v2/bson"
 )
 
 // this file houses all crud logic for questions
-func AddQuestion(farmforumDatabase *mongo.Database) http.Handler {
+func AddQuestion() http.Handler {
 	return http.HandlerFunc((func(w http.ResponseWriter, r *http.Request) {
 		questionDocument := models.Question{}
-		questionCollection := farmforumDatabase.Collection("questions")
+		questionCollection := db.DB().Collection("questions")
 
 		vars := mux.Vars(r)
 		id, err := primitive.ObjectIDFromHex(vars["id"])
@@ -40,10 +40,10 @@ func AddQuestion(farmforumDatabase *mongo.Database) http.Handler {
 	}))
 }
 
-func UpdateQuestion(farmforumDatabase *mongo.Database) http.Handler {
+func UpdateQuestion() http.Handler {
 	return http.HandlerFunc((func(w http.ResponseWriter, r *http.Request) {
 		questionDocument := models.Question{}
-		questionCollection := farmforumDatabase.Collection("questions")
+		questionCollection := db.DB().Collection("questions")
 		vars := mux.Vars(r)
 
 		err := json.NewDecoder(r.Body).Decode(&questionDocument)
@@ -75,9 +75,9 @@ func UpdateQuestion(farmforumDatabase *mongo.Database) http.Handler {
 	}))
 }
 
-func FetchQuestionByCropId(farmforumDatabase *mongo.Database) http.Handler {
+func FetchQuestionByCropId() http.Handler {
 	return http.HandlerFunc((func(w http.ResponseWriter, r *http.Request) {
-		questionCollection := farmforumDatabase.Collection("questions")
+		questionCollection := db.DB().Collection("questions")
 
 		vars := mux.Vars(r)
 		id, err := primitive.ObjectIDFromHex(vars["id"])
