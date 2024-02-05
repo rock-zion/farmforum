@@ -7,18 +7,18 @@ import (
 	"log"
 	"net/http"
 
+	db "github.com/farmforum/config"
 	"github.com/farmforum/models"
 	"github.com/gorilla/mux"
 	"go.mongodb.org/mongo-driver/bson/primitive"
-	"go.mongodb.org/mongo-driver/mongo"
 	"gopkg.in/mgo.v2/bson"
 )
 
 // this file houses all crud logic for questions
 
 // edit a crop entry
-func FetchCropById(farmforumDatabase *mongo.Database) http.Handler {
-	cropCollection := farmforumDatabase.Collection("crop")
+func FetchCropById() http.Handler {
+	cropCollection := db.DB().Collection("crop")
 	return http.HandlerFunc((func(w http.ResponseWriter, r *http.Request) {
 		vars := mux.Vars(r)
 		id, err := primitive.ObjectIDFromHex(vars["id"])
@@ -45,8 +45,8 @@ func FetchCropById(farmforumDatabase *mongo.Database) http.Handler {
 }
 
 // fetch all crops
-func FetchAllCrops(farmforumDatabase *mongo.Database) http.Handler {
-	cropCollection := farmforumDatabase.Collection("crop")
+func FetchAllCrops() http.Handler {
+	cropCollection := db.DB().Collection("crop")
 	return http.HandlerFunc((func(w http.ResponseWriter, r *http.Request) {
 		cursor, err := cropCollection.Find(context.TODO(), bson.M{})
 		if err != nil {
@@ -63,9 +63,9 @@ func FetchAllCrops(farmforumDatabase *mongo.Database) http.Handler {
 }
 
 // add a crop entry
-func AddCrop(farmforumDatabase *mongo.Database) http.Handler {
+func AddCrop() http.Handler {
 	cropDocument := models.Crop{}
-	cropCollection := farmforumDatabase.Collection("crop")
+	cropCollection := db.DB().Collection("crop")
 	return http.HandlerFunc((func(w http.ResponseWriter, r *http.Request) {
 		err := json.NewDecoder(r.Body).Decode(&cropDocument)
 		if err != nil {
@@ -82,8 +82,8 @@ func AddCrop(farmforumDatabase *mongo.Database) http.Handler {
 }
 
 // delete a crop entry
-func DeleteCrop(farmforumDatabase *mongo.Database) http.Handler {
-	cropCollection := farmforumDatabase.Collection("crop")
+func DeleteCrop() http.Handler {
+	cropCollection := db.DB().Collection("crop")
 	return http.HandlerFunc((func(w http.ResponseWriter, r *http.Request) {
 		vars := mux.Vars(r)
 		id, err := primitive.ObjectIDFromHex(vars["id"])
@@ -101,8 +101,8 @@ func DeleteCrop(farmforumDatabase *mongo.Database) http.Handler {
 }
 
 // edit a crop entry
-func EditCrop(farmforumDatabase *mongo.Database) http.Handler {
-	cropCollection := farmforumDatabase.Collection("crop")
+func EditCrop() http.Handler {
+	cropCollection := db.DB().Collection("crop")
 	return http.HandlerFunc((func(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("Updating...")
 		vars := mux.Vars(r)
@@ -131,9 +131,9 @@ func EditCrop(farmforumDatabase *mongo.Database) http.Handler {
 }
 
 // insert many a crop entry
-func InsertManyCrops(farmforumDatabase *mongo.Database) http.Handler {
+func InsertManyCrops() http.Handler {
 	var cropDocument = []interface{}{models.Crop{}}
-	cropCollection := farmforumDatabase.Collection("crop")
+	cropCollection := db.DB().Collection("crop")
 	return http.HandlerFunc((func(w http.ResponseWriter, r *http.Request) {
 		println("Adding Many...")
 		err := json.NewDecoder(r.Body).Decode(&cropDocument)
