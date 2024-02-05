@@ -1,14 +1,10 @@
 package main
 
 import (
-	"context"
 	"log"
 	"net/http"
 	"os"
 
-
-	"github.com/farmforum/controllers"
-	"github.com/gorilla/mux"
 	"github.com/farmforum/routes"
 	"github.com/joho/godotenv"
 )
@@ -36,13 +32,13 @@ func init() {
 		return
 	}
 
-func main() {
-	err := godotenv.Load()
+	err = godotenv.Load()
 	if err != nil {
 		log.Fatal("Error loading .env file")
 	}
 }
 
+func main() {
 	server := &http.Server{
 		Addr:    os.Getenv("SERVER_ADDR"),
 		Handler: routes.Routes(),
