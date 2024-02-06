@@ -26,6 +26,6 @@ func DB() *mongo.Database {
 		}
 	}()
 
-	farmforumDatabase := client.Database(os.Getenv("FARM_FORUM_DB_NAME"))
+	farmforumDatabase := client.Database(os.Getenv("DB_NAME"))
 	return farmforumDatabase
 }
